@@ -88,6 +88,21 @@ class Cast:
             result = self._actors[group][number]
         return result
 
+    def get_all_actors(self, group):
+        """Gets all actors in a given group.
+        
+        Args:
+            group: A string containing the name of the group.
+            
+        Returns:
+        An instance of Actor.
+        """
+
+        result = None
+        if group in self._actors.keys():
+            result = self._actors[group]
+        return result
+
     def remove_actor(self, group, actor):
         """Removes an actor from the given group.
         

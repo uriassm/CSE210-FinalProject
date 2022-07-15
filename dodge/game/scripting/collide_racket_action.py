@@ -10,13 +10,20 @@ class CollideRacketAction(Action):
         self._audio_service = audio_service
         
     def execute(self, cast, script, callback):
-        ball = cast.get_first_actor(BALL_GROUP)
+        balls = cast.get_all_actors(BALL_GROUP)
         racket = cast.get_first_actor(RACKET_GROUP)
+        over_sound = Sound(OVER_SOUND)
         
-        ball_body = ball.get_body()
-        racket_body = racket.get_body()
+        for ball in balls:
+            ball_body = ball.get_body()
+            racket_body = racket.get_body()
 
-        if self._physics_service.has_collided(ball_body, racket_body):
-            ball.bounce_y()
-            sound = Sound(BOUNCE_SOUND)
-            self._audio_service.play_sound(sound)    
+            if self._physics_service.has_collided(ball_body, racket_body):
+                stats = cast.get_first_actor(STATS_GROUP)
+                stats.lose_life()
+                
+                if stats.get_lives() > 0:
+                    callback.on_next(TRY_AGAIN) 
+                else:
+                    callback.on_next(GAME_OVER)
+                    self._audio_service.play_sound(over_sound)    

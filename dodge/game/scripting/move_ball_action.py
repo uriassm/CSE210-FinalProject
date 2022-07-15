@@ -8,9 +8,11 @@ class MoveBallAction(Action):
         pass
         
     def execute(self, cast, script, callback):
-        ball = cast.get_first_actor(BALL_GROUP)
-        body = ball.get_body()
-        position = body.get_position()
-        velocity = body.get_velocity()
-        position = position.add(velocity)
-        body.set_position(position)
+        balls = cast.get_all_actors(BALL_GROUP)
+        for ball in balls:
+
+            body = ball.get_body()
+            position = body.get_position()
+            velocity = body.get_velocity()
+            position = position.add(velocity)
+            body.set_position(position)

@@ -149,8 +149,9 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     
     def _activate_ball(self, cast):
-        ball = cast.get_specific_actor(BALL_GROUP, self._actor_number)
-        ball.release()
+        balls = cast.get_all_actors(BALL_GROUP)
+        for ball in balls:
+            ball.release()
         self._actor_number += 1
 
     def _add_ball(self, cast):
@@ -164,8 +165,8 @@ class SceneManager:
         image = Image(BALL_IMAGE)
         ball = Ball(body, image, True)
         cast.add_actor(BALL_GROUP, ball)
-        ball = Ball2(body, image, True)
-        cast.add_actor(BALL_GROUP, ball)
+        # ball = Ball2(body, image, True)
+        # cast.add_actor(BALL_GROUP, ball)
 
     def _add_bricks(self, cast):
         cast.clear_actors(BRICK_GROUP)
